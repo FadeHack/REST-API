@@ -16,7 +16,7 @@ type Item struct {
 	ID    primitive.ObjectID `bson:"_id,omitempty"`
 	Title string             `bson:"title,omitempty"`
 	SubTitle string             `bson:"sub_title,omitempty"`
-	content string             `bson:"content,omitempty"`
+	Content string             `bson:"content,omitempty"`
 }
 
 var client *mongo.Client
