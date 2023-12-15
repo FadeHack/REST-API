@@ -1,0 +1,23 @@
+/* Custom styles for the dark theme */
+body {
+    background-color: #343a40; /* Set the background color for the entire body */
+}
+
+.card {
+    background-color: #303336; /* Set the background color for cards */
+    border: 1px solid #343a40; /* Set the border color for cards */
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+    background-color: #007bff; /* Set the background color for primary, secondary, and danger buttons */
+    border-color: #007bff; /* Set the border color for primary, secondary, and danger buttons */
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-danger:hover {
+    background-color: #0056b3; /* Set the hover background color for primary, secondary, and danger buttons */
+    border-color: #0056b3; /* Set the hover border color for primary, secondary, and danger buttons */
+}

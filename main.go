@@ -2,14 +2,15 @@ package main
 
 import (
 	"context"
+	"crypto/dsa"
 	"encoding/json"
 	"time"
 
-	"gofr.dev/pkg/gofr"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"gofr.dev/pkg/gofr"
 )
 
 type Item struct {
@@ -47,10 +48,7 @@ func createItem(c *gofr.Context) (interface{}, error) {
 	collection := client.Database("blog_gofr").Collection("blog")
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
 	result, _ := collection.InsertOne(ctx, item)
-	return map[string]interface{}{
-		"message": "Item successfully created",
-		"result":  result,
-	}, nil
+	return result, nil
 }
 
 // Get all items
@@ -71,10 +69,7 @@ func getItems(c *gofr.Context) (interface{}, error) {
 	if err := cursor.Err(); err != nil {
 		return nil, err
 	}
-	return map[string]interface{}{
-		"message": "All Items successfully Fetched",
-		"result":  items,
-	}, nil
+	return items, nil
 }
 
 // Get an item by ID
@@ -87,10 +82,7 @@ func getItem(c *gofr.Context) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	return map[string]interface{}{
-		"message": "Item successfully Fetched",
-		"result":  item,
-	}, nil
+	return item, nil
 }
 
 // Update a part of an item by ID
@@ -107,10 +99,7 @@ func patchItem(c *gofr.Context) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	return map[string]interface{}{
-		"message": "Item successfully updated",
-		"result":  result,
-	}, nil
+	return result, nil
 }
 
 
@@ -128,37 +117,48 @@ func updateItem(c *gofr.Context) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	return map[string]interface{}{
-		"message": "Item successfully updated",
-		"result":  result,
-	}, nil
+	return result, nil
 }
 
 // Delete an item by ID
 func deleteItem(c *gofr.Context) (interface{}, error) {
-	id, _ := primitive.ObjectIDFromHex(c.Params()["id"])
-	collection := client.Database("blog_gofr").Collection("blog")
-	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
+    did, _ := primitive.ObjectIDFromHex(c.PathParam("id"))
+    collection := client.Database("blog_gofr").Collection("blog")
+    ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
 
-	// Find the document before deleting it
-	var item Item
-	err := collection.FindOne(ctx, Item{ID: id}).Decode(&item)
-	if err != nil {
-		return nil, err
-	}
+    // Find the document before deleting it
+    var item Item
+    err := collection.FindOne(ctx, bson.M{"_id": did}).Decode(&item)
+    if err != nil {
+        return nil, err
+    }
 
-	// Delete the document
-	_, err = collection.DeleteOne(ctx, Item{ID: id})
-	if err != nil {
-		return nil, err
-	}
-	
-	return map[string]interface{}{
-		"message": "Item successfully deleted",
-		"item":    item,
-	}, nil
+    // Delete the document
+    _, err = collection.DeleteOne(ctx, bson.M{"_id": did})
+    if err != nil {
+        return nil, err
+    }
+
+    return item, nil
 }
 
+// func deleteItem(c *gofr.Context) (interface{}, error) {
+// 	var cId = c.PathParam("id")
+// 	objID, err := primitive.ObjectIDFromHex(cId)
+// 	if err != nil {
+// 		return primitive.NilObjectID, err
+// 	}
+// 	collection := client.Database("blog_gofr").Collection("blog")
+
+// 	filter := bson.M{"caseid": objID}
+
+// 	result, err := collection.DeleteOne(c, filter)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	return result.DeletedCount, nil
+// }
 
 
 
