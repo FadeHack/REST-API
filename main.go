@@ -101,7 +101,7 @@ func patchItem(c *gofr.Context) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	collection := client.Database("test").Collection("items")
+	collection := client.Database("blog_gofr").Collection("blog")
 	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
 	result, err := collection.UpdateOne(ctx, Item{ID: id}, bson.M{"$set": update})
 	if err != nil {
@@ -139,13 +139,23 @@ func deleteItem(c *gofr.Context) (interface{}, error) {
 	id, _ := primitive.ObjectIDFromHex(c.Params()["id"])
 	collection := client.Database("blog_gofr").Collection("blog")
 	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
-	result, err := collection.DeleteOne(ctx, Item{ID: id})
+
+	// Find the document before deleting it
+	var item Item
+	err := collection.FindOne(ctx, Item{ID: id}).Decode(&item)
 	if err != nil {
 		return nil, err
 	}
+
+	// Delete the document
+	_, err = collection.DeleteOne(ctx, Item{ID: id})
+	if err != nil {
+		return nil, err
+	}
+	
 	return map[string]interface{}{
 		"message": "Item successfully deleted",
-		"result":  result,
+		"item":    item,
 	}, nil
 }
 
