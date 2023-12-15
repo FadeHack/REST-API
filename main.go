@@ -31,6 +31,7 @@ func main(){
 	app.POST("/item", createItem)
 	app.GET("/items", getItems)
 	app.GET("/item/{id}", getItem)
+	app.PATCH("/item/{id}", patchItem)
 	app.PUT("/item/{id}", updateItem)
 	app.DELETE("/item/{id}", deleteItem)
 
@@ -91,6 +92,27 @@ func getItem(c *gofr.Context) (interface{}, error) {
 		"result":  item,
 	}, nil
 }
+
+// Update a part of an item by ID
+func patchItem(c *gofr.Context) (interface{}, error) {
+	id, _ := primitive.ObjectIDFromHex(c.Params()["id"])
+	var update bson.M
+	err := json.NewDecoder(c.Request().Body).Decode(&update)
+	if err != nil {
+		return nil, err
+	}
+	collection := client.Database("test").Collection("items")
+	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
+	result, err := collection.UpdateOne(ctx, Item{ID: id}, bson.M{"$set": update})
+	if err != nil {
+		return nil, err
+	}
+	return map[string]interface{}{
+		"message": "Item successfully updated",
+		"result":  result,
+	}, nil
+}
+
 
 // Update an item by ID
 func updateItem(c *gofr.Context) (interface{}, error) {
