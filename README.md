@@ -49,7 +49,7 @@ Delete a specific blog by its ID.
 ### 1. Create New Blog
 
 Frontend:
-![Create New Blog - Frontend](screenshots/cb.png)
+![Create New Blog - Frontend](screenshots/cr.png)
 
 Postman Response         | Postman Tests
 ------------------------- | -------------------------
