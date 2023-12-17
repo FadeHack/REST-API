@@ -1,4 +1,3 @@
-```markdown
 # Blog Application
 
 ## Technology Specification
@@ -83,4 +82,3 @@ Postman Response         | Postman Tests
 2. **Run Frontend:**
    - Open terminal in the frontend directory.
    - For local usage, use the "Live Server" extension to run the frontend.
-```
