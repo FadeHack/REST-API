@@ -76,7 +76,7 @@ Postman Response         | Postman Tests
 ### 4. Update Blog By ID
 
 Frontend:
-![Update Blog By Id - Frontend](screenshots/ub.png)
+![Update Blog By Id - Frontend](screenshots/eb.png)
 
 Postman Response         | Postman Tests
 ------------------------- | -------------------------
