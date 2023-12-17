@@ -31,19 +31,19 @@ func main(){
 
 	app := gofr.New()
 
-	app.POST("/item", func(c *gofr.Context) (interface{}, error) {
+	app.POST("/blog", func(c *gofr.Context) (interface{}, error) {
 		return routes.CreateNewBlog(c, client)
 	})
-	app.GET("/items", func(c *gofr.Context) (interface{}, error) {
+	app.GET("/blogs", func(c *gofr.Context) (interface{}, error) {
 		return routes.GetAllBlogs(c, client)
 	})
-	app.GET("/item/{id}", func(c *gofr.Context) (interface{}, error) {
+	app.GET("/blog/{id}", func(c *gofr.Context) (interface{}, error) {
 		return routes.GetBlogById(c, client)
 	})
-	app.PUT("/uitem/{id}", func(c *gofr.Context) (interface{}, error) {
+	app.PUT("/ublog/{id}", func(c *gofr.Context) (interface{}, error) {
 		return routes.UpdateBlogById(c, client)
 	})
-	app.DELETE("/ditem/{id}", func(c *gofr.Context) (interface{}, error) {
+	app.DELETE("/dblog/{id}", func(c *gofr.Context) (interface{}, error) {
 		return routes.DeleteBlogById(c, client)
 	})
 

@@ -2,182 +2,165 @@ package routes
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
 	"github.com/FadeHack/Rest-API/models"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"gofr.dev/pkg/gofr"
+	"github.com/gin-gonic/gin"
+	"github.com/stretchr/testify/assert"
 )
 
-func setup() (*mongo.Client, error) {
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	clientOptions := options.Client().ApplyURI("mongodb+srv://Temp_User:9BH1EM6p6LWStCxt@mongodatabase.ytbk03l.mongodb.net/?retryWrites=true&w=majority")
-	client, err := mongo.Connect(ctx, clientOptions)
-	return client, err
-}
-
-func wrapGofrHandler(h func(c *gofr.Context) (interface{}, error)) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		ctx := &gofr.Context{
-			Request: func() *http.Request {
-				return r
-			},
-			Response: func() http.ResponseWriter {
-				return w
-			},
-		}
-		_, err := h(ctx)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
-	}
-}
-
 func TestCreateNewBlog(t *testing.T) {
-	client, err := setup()
-	if err != nil {
-		t.Fatalf("Failed to connect to database: %v", err)
-	}
-
-	item := models.Item{
-		Title: "Test Title",
-		SubTitle: "Test SubTitle",
-		Content: "Test Content",
-	}
-
-	jsonItem, _ := json.Marshal(item)
-	req, err := http.NewRequest("POST", "/item", bytes.NewBuffer(jsonItem))
+	// Create a new HTTP request
+	item := models.Item{Title: "Test Title", SubTitle: "Test SubTitle", Content: "Test Content"}
+	body, _ := json.Marshal(item)
+	req, err := http.NewRequest("POST", "/blog", bytes.NewBuffer(body))
 	if err != nil {
 		t.Fatal(err)
 	}
 
+	// Record the response
 	rr := httptest.NewRecorder()
-	handler := wrapGofrHandler(func(c *gofr.Context) (interface{}, error) {
-		return CreateNewBlog(c, client)
-	})
 
-	handler.ServeHTTP(rr, req)
+	// Create a new router and register the handler
+	router := gin.Default()
+	router.POST("/blog", CreateNewBlog)
 
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+	// Serve the HTTP request
+	router.ServeHTTP(rr, req)
+
+	// Check the status code
+	assert.Equal(t, http.StatusOK, rr.Code)
+
+	// Check the response body
+	var responseItem models.Item
+	err = json.Unmarshal(rr.Body.Bytes(), &responseItem)
+	if err != nil {
+		t.Fatal(err)
 	}
-
+	assert.Equal(t, item.Title, responseItem.Title)
+	assert.Equal(t, item.SubTitle, responseItem.SubTitle)
+	assert.Equal(t, item.Content, responseItem.Content)
 }
 
-// Test for GetAllBlogs
 func TestGetAllBlogs(t *testing.T) {
-	client, err := setup()
-	if err != nil {
-		t.Fatalf("Failed to connect to database: %v", err)
-	}
-
-	req, err := http.NewRequest("GET", "/items", nil)
+	// Create a new HTTP request
+	req, err := http.NewRequest("GET", "/blogs", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
+	// Record the response
 	rr := httptest.NewRecorder()
-	handler := wrapGofrHandler(func(c *gofr.Context) (interface{}, error) {
-		return GetAllBlogs(c, client)
-	})
 
-	handler.ServeHTTP(rr, req)
+	// Create a new router and register the handler
+	router := gin.Default()
+	router.GET("/blogs", GetAllBlogs)
 
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+	// Serve the HTTP request
+	router.ServeHTTP(rr, req)
+
+	// Check the status code
+	assert.Equal(t, http.StatusOK, rr.Code)
+
+	// Check the response body
+	var responseItems []models.Item
+	err = json.Unmarshal(rr.Body.Bytes(), &responseItems)
+	if err != nil {
+		t.Fatal(err)
 	}
 
 }
 
-// Test for GetBlogById
 func TestGetBlogById(t *testing.T) {
-	client, err := setup()
-	if err != nil {
-		t.Fatalf("Failed to connect to database: %v", err)
-	}
-
-	req, err := http.NewRequest("GET", "/item/{id}", nil)
+	// Create a new HTTP request
+	req, err := http.NewRequest("GET", "/blog/123", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
+	// Record the response
 	rr := httptest.NewRecorder()
-	handler := wrapGofrHandler(func(c *gofr.Context) (interface{}, error) {
-		return GetBlogById(c, client)
-	})
 
-	handler.ServeHTTP(rr, req)
+	// Create a new router and register the handler
+	router := gin.Default()
+	router.GET("/blog/:id", GetBlogById)
 
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+	// Serve the HTTP request
+	router.ServeHTTP(rr, req)
+
+	// Check the status code
+	assert.Equal(t, http.StatusOK, rr.Code)
+
+	// Check the response body
+	var responseItem models.Item
+	err = json.Unmarshal(rr.Body.Bytes(), &responseItem)
+	if err != nil {
+		t.Fatal(err)
 	}
 
 }
 
-// Test for UpdateBlogById
 func TestUpdateBlogById(t *testing.T) {
-	client, err := setup()
-	if err != nil {
-		t.Fatalf("Failed to connect to database: %v", err)
-	}
-
-	item := models.Item{
-		Title: "Updated Test Title",
-		SubTitle: "Updated Test SubTitle",
-		Content: "Updated Test Content",
-	}
-
-	jsonItem, _ := json.Marshal(item)
-	req, err := http.NewRequest("PUT", "/uitem/{id}", bytes.NewBuffer(jsonItem))
+	// Create a new HTTP request
+	item := models.Item{Title: "Updated Title", SubTitle: "Updated SubTitle", Content: "Updated Content"}
+	body, _ := json.Marshal(item)
+	req, err := http.NewRequest("PUT", "/ublog/123", bytes.NewBuffer(body))
 	if err != nil {
 		t.Fatal(err)
 	}
 
+	// Record the response
 	rr := httptest.NewRecorder()
-	handler := wrapGofrHandler(func(c *gofr.Context) (interface{}, error) {
-		return UpdateBlogById(c, client)
-	})
 
-	handler.ServeHTTP(rr, req)
+	// Create a new router and register the handler
+	router := gin.Default()
+	router.PUT("/ublog/:id", UpdateBlogById)
 
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+	// Serve the HTTP request
+	router.ServeHTTP(rr, req)
+
+	// Check the status code
+	assert.Equal(t, http.StatusOK, rr.Code)
+
+	// Check the response body
+	var responseItem models.Item
+	err = json.Unmarshal(rr.Body.Bytes(), &responseItem)
+	if err != nil {
+		t.Fatal(err)
 	}
-
+	assert.Equal(t, item.Title, responseItem.Title)
+	assert.Equal(t, item.SubTitle, responseItem.SubTitle)
+	assert.Equal(t, item.Content, responseItem.Content)
 }
 
-// Test for DeleteBlogById
 func TestDeleteBlogById(t *testing.T) {
-	client, err := setup()
-	if err != nil {
-		t.Fatalf("Failed to connect to database: %v", err)
-	}
-
-	req, err := http.NewRequest("DELETE", "/ditem/{id}", nil)
+	// Create a new HTTP request
+	req, err := http.NewRequest("DELETE", "/dblog/123", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
+	// Record the response
 	rr := httptest.NewRecorder()
-	handler := wrapGofrHandler(func(c *gofr.Context) (interface{}, error) {
-		return DeleteBlogById(c, client)
-	})
 
-	handler.ServeHTTP(rr, req)
+	// Create a new router and register the handler
+	router := gin.Default()
+	router.DELETE("/dblog/:id", DeleteBlogById)
 
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+	// Serve the HTTP request
+	router.ServeHTTP(rr, req)
+
+	// Check the status code
+	assert.Equal(t, http.StatusOK, rr.Code)
+
+	// Check the response body
+	var responseItem models.Item
+	err = json.Unmarshal(rr.Body.Bytes(), &responseItem)
+	if err != nil {
+		t.Fatal(err)
 	}
 
 }

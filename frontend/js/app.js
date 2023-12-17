@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Function to fetch and display blogs
 function displayBlogs() {
-    fetch('http://localhost:8000/items')
+    fetch('http://localhost:8000/blogs')
     .then(response => response.json())
     .then(data => {
         const blogList = document.getElementById('blog-list');
@@ -83,7 +83,7 @@ function createItem(e) {
     var subtitle = document.getElementById('create-subtitle').value;
     var content = document.getElementById('create-content').value;
 
-    fetch('http://localhost:8000/item', {
+    fetch('http://localhost:8000/blog', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -111,11 +111,13 @@ function searchItem(e) {
 
     var id = document.getElementById('search-id').value;
 
-    fetch('http://localhost:8000/item/' + id)
+    fetch('http://localhost:8000/blog/' + id)
     .then(response => response.json())
     .then(data => {
         data = data.data;
+        if (id === data.ID) {
         const blogList = document.getElementById('blog-list');
+        
         blogList.innerHTML = '';
 
         const card = `
@@ -140,6 +142,10 @@ function searchItem(e) {
         blogList.innerHTML = card;
         // Enable back arrow after search
         document.getElementById('back-arrow').style.cursor = 'pointer';
+        }
+        else{
+        alert("Not Found !! (Enter Valid ID)")
+        }
     })
     .catch((error) => {
         console.error('Error:', error);
@@ -149,7 +155,7 @@ function searchItem(e) {
 // Function to edit a blog
 function editBlog(id) {
     // Fetch the specific blog data
-    fetch('http://localhost:8000/item/' + id)
+    fetch('http://localhost:8000/blog/' + id)
     .then(response => response.json())
     .then(data => {
         // Display the edit form for the specific blog
@@ -205,7 +211,7 @@ function saveChanges(id) {
     var subtitle = document.getElementById('edit-subtitle').value;
     var content = document.getElementById('edit-content').value;
 
-    fetch('http://localhost:8000/uitem/' + id, {
+    fetch('http://localhost:8000/ublog/' + id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -233,7 +239,7 @@ function saveChanges(id) {
 function deleteBlog(id) {
     console.log('Deleting blog with ID:', id); // Add this line for debugging
 
-    fetch('http://localhost:8000/ditem/' + id, {
+    fetch('http://localhost:8000/dblog/' + id, {
         method: 'DELETE',
     })
     .then(response => {
