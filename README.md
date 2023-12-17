@@ -43,7 +43,7 @@ Endpoint: `DELETE /blog/{id}`
 Delete a specific blog by its ID.
 
 ## Postman Collection
-[![Run in Postman][<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/31394686-037e2999-fd0f-4d4f-a6c5-76a02c6923a0?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D31394686-037e2999-fd0f-4d4f-a6c5-76a02c6923a0%26entityType%3Dcollection%26workspaceId%3D42632939-a688-4bfc-baad-b3f4c2d2d9bf)]
+[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/31394686-037e2999-fd0f-4d4f-a6c5-76a02c6923a0?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D31394686-037e2999-fd0f-4d4f-a6c5-76a02c6923a0%26entityType%3Dcollection%26workspaceId%3D42632939-a688-4bfc-baad-b3f4c2d2d9bf)
 
 ## Screenshots
 
