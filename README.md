@@ -95,10 +95,9 @@ Postman Response         | Postman Tests
 
 ### User Interaction
 
-<figure>
-  <img src="screenshots/seq1.png" alt="User Interaction Diagram" style="width: 45%; margin-right: 5px;">
-  <figcaption>User Interaction Diagram</figcaption>
-</figure>
+User Interaction         | System Flow
+-------------------------| -------------
+![User Interaction Diagram](screenshots/seq1.png) | ![System Flow Diagram](screenshots/seq2.png)
 
 ### System Flow
 
