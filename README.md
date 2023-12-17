@@ -1,4 +1,4 @@
-# Blog Application
+# SBlog Application
 
 ## Technology Specification
 
@@ -6,14 +6,13 @@ This blog application is built using the following technologies:
 
 - **Backend:**
   - Language: Go (Golang)
-  - Framework: gofiber (Gofr)
+  - Framework: GoFr
   - Database: MongoDB
   - Dependencies: Go Modules
 
 - **Frontend:**
   - HTML, CSS, JavaScript
   - Bootstrap for styling
-  - jQuery for DOM manipulation
 
 ## Usage
 
@@ -50,27 +49,55 @@ Delete a specific blog by its ID.
 ### 1. Create New Blog
 
 Frontend:
-![Create New Blog - Frontend](path/to/frontend-screenshot.png)
+![Create New Blog - Frontend](screenshots/cb.png)
 
 Postman Response         | Postman Tests
 ------------------------- | -------------------------
-![Create New Blog - Postman Response](path/to/postman-response-screenshot.png) | ![Create New Blog - Postman Tests](path/to/postman-tests-screenshot.png)
+![Create New Blog - Postman Response](screenshots/cbr.png) | ![Create New Blog - Postman Tests](screenshots/cbt.png)
 
 ### 2. Get All Blogs
 
-...
+Frontend:
+![Get All Blogs - Frontend](screenshots/gb.png)
+
+Postman Response         | Postman Tests
+------------------------- | -------------------------
+![Get All Blogs - Postman Response](screenshots/gbr.png) | ![Get All Blogs - Postman Tests](screenshots/gbt.png)
 
 ### 3. Get Blog By ID
 
-...
+Frontend:
+![Get Blog By Id - Frontend](screenshots/sb.png)
+
+Postman Response         | Postman Tests
+------------------------- | -------------------------
+![Get Blog By Id - Postman Response](screenshots/sbr.png) | ![Get Blog By Id - Postman Tests](screenshots/sbt.png)
 
 ### 4. Update Blog By ID
 
-...
+Frontend:
+![Update Blog By Id - Frontend](screenshots/ub.png)
+
+Postman Response         | Postman Tests
+------------------------- | -------------------------
+![Update Blog By Id - Postman Response](screenshots/ubr.png) | ![Update Blog By Id - Postman Tests](screenshots/ubt.png)
 
 ### 5. Delete Blog By ID
 
-...
+Frontend:
+![Delete Blog By Id - Frontend](screenshots/db.png)
+
+Postman Response         | Postman Tests
+------------------------- | -------------------------
+![Delete Blog By Id - Postman Response](screenshots/dbr.png) | ![Delete Blog By Id - Postman Tests](screenshots/dbt.png)
+
+## Sequence Diagram
+
+### User Interaction
+![User Interaction Diagram](screenshots/seq1.png)
+
+### System Flow
+![System Flow Diagram](screenshots/seq2.png)
 
 ## How to Run
 
