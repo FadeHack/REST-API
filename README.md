@@ -101,11 +101,33 @@ Postman Response         | Postman Tests
 
 ## How to Run
 
-1. **Run Backend:**
-   - Open terminal in the backend directory.
-   - Run `go mod tidy` to tidy up dependencies.
-   - Run `go run main.go` to start the backend server.
+1. **Clone the Project:**
+   - Clone the repository using the following command:
+     ```bash
+     git clone [https://github.com/FadeHack/REST-API]
+     ```
 
-2. **Run Frontend:**
-   - Open terminal in the frontend directory.
-   - For local usage, use the "Live Server" extension to run the frontend.
+2. **Navigate to Project Directory:**
+   - Change into the project directory:
+     ```bash
+     cd REST-API
+     ```
+
+3. **Run Backend:**
+   - Install Dependencies:
+     ```bash
+     go mod tidy
+     ```
+   - Start the backend server:
+     ```bash
+     go run main.go
+     ```
+
+4. **Run Frontend:**
+   - Open a new terminal and navigate to the frontend directory.
+   - For local usage, it's recommended to use the "Live Server" extension to run the frontend.
+
+
+---
+
+*Created by @FadeHack*
