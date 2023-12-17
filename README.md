@@ -98,12 +98,6 @@ User Interaction         | System Flow
 -------------------------| -------------
 ![User Interaction Diagram](screenshots/seq1.png) | ![System Flow Diagram](screenshots/seq2.png)
 
-### System Flow
-
-<figure>
-  <img src="screenshots/seq2.png" alt="System Flow Diagram" style="width: 45%; margin-left: 5px;">
-  <figcaption>System Flow Diagram</figcaption>
-</figure>
 
 
 ## How to Run
