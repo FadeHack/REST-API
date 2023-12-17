@@ -117,7 +117,7 @@ User Interaction         | System Flow
 3. **Run Backend:**
    - Install Dependencies:
      ```bash
-     go mod tidy
+     go mod download
      ```
    - Start the backend server:
      ```bash
