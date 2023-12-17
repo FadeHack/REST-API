@@ -94,10 +94,19 @@ Postman Response         | Postman Tests
 ## Sequence Diagram
 
 ### User Interaction
-![User Interaction Diagram](screenshots/seq1.png)
+
+<figure>
+  <img src="screenshots/seq1.png" alt="User Interaction Diagram" style="width: 45%; margin-right: 5px;">
+  <figcaption>User Interaction Diagram</figcaption>
+</figure>
 
 ### System Flow
-![System Flow Diagram](screenshots/seq2.png)
+
+<figure>
+  <img src="screenshots/seq2.png" alt="System Flow Diagram" style="width: 45%; margin-left: 5px;">
+  <figcaption>System Flow Diagram</figcaption>
+</figure>
+
 
 ## How to Run
 
@@ -130,4 +139,4 @@ Postman Response         | Postman Tests
 
 ---
 
-*Created by [@FadeHack]*
+*Created by [@FadeHack](https://github.com/FadeHack)*
