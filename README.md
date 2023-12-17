@@ -130,4 +130,4 @@ Postman Response         | Postman Tests
 
 ---
 
-*Created by @FadeHack*
+*Created by [@FadeHack]*
