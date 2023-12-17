@@ -93,7 +93,6 @@ Postman Response         | Postman Tests
 
 ## Sequence Diagram
 
-### User Interaction
 
 User Interaction         | System Flow
 -------------------------| -------------
