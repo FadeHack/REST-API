@@ -105,7 +105,7 @@ User Interaction         | System Flow
 1. **Clone the Project:**
    - Clone the repository using the following command:
      ```bash
-     git clone [https://github.com/FadeHack/REST-API]
+     git clone https://github.com/FadeHack/REST-API
      ```
 
 2. **Navigate to Project Directory:**
