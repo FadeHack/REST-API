@@ -205,7 +205,7 @@ function saveChanges(id) {
     var subtitle = document.getElementById('edit-subtitle').value;
     var content = document.getElementById('edit-content').value;
 
-    fetch('http://localhost:8000/item/' + id, {
+    fetch('http://localhost:8000/uitem/' + id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -233,7 +233,7 @@ function saveChanges(id) {
 function deleteBlog(id) {
     console.log('Deleting blog with ID:', id); // Add this line for debugging
 
-    fetch('http://localhost:8000/item/' + id, {
+    fetch('http://localhost:8000/ditem/' + id, {
         method: 'DELETE',
     })
     .then(response => {

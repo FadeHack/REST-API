@@ -1,4 +1,4 @@
-module github.com/example
+module github.com/FadeHack/Rest-API
 
 go 1.21.4
 
